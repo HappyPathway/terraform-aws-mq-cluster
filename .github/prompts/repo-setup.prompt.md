@@ -1,16 +1,3 @@
-# Building an OpenSearch Cluster
+# terraform-aws-mq-cluster
 
-## Metadata
-- Purpose: Generate Terraform code to create an MQ cluster
-- Author: Dave Arnold
-- Date: 2025-02-18
-
-## Instructions
-please inspect the documentation for amazon mq and any related infrastructure that should be required for completing an aws opensearch module.
-
-must follow best practices
-
-all attributes on all incldued resources should be exposed
-
-each resource type should have it's own object type variable
-all attributes should be marked as optional in the variable.
+This module will provision an Amazon MQ cluster for the message queue. It will support managed RabbitMQ with high availability, ensuring reliable message queue clustering and high availability configuration.
