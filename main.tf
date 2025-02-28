@@ -95,13 +95,16 @@ resource "aws_mq_broker" "main" {
     }
   }
 
-  dynamic "maintenance_window_start_time" {
-    for_each = var.maintenance_window_config != null ? [var.maintenance_window_config] : []
-    content {
-      day_of_week = maintenance_window_start_time.value.day_of_week
-      time_of_day = maintenance_window_start_time.value.time_of_day
-      time_zone   = maintenance_window_start_time.value.time_zone
-    }
+  user {
+    username = "morpheus"
+    password = random_password.broker_password.result
+  }
+
+  # Single maintenance window configuration block
+  maintenance_window_start_time {
+    day_of_week = try(var.maintenance_window_config.day_of_week, "SUNDAY")
+    time_of_day = try(var.maintenance_window_config.time_of_day, "03:00")
+    time_zone   = try(var.maintenance_window_config.time_zone, "UTC")
   }
 
   dynamic "logs" {
@@ -123,4 +126,10 @@ resource "aws_mq_broker" "main" {
   tags = var.tags
 
   depends_on = [aws_iam_role.cloudwatch]
+}
+
+resource "random_password" "broker_password" {
+  length           = 32
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }

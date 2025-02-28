@@ -1,5 +1,5 @@
 output "broker_id" {
-  description = "Unique identifier for the broker"
+  description = "The ID of the broker"
   value       = aws_mq_broker.main.id
 }
 
@@ -13,12 +13,7 @@ output "broker_instances" {
   value       = aws_mq_broker.main.instances
 }
 
-output "primary_console_url" {
-  description = "The URL of the primary broker's web console"
-  value       = aws_mq_broker.main.primary_console_url
-}
-
-output "primary_endpoints" {
-  description = "Map of protocol to primary endpoint URLs"
-  value       = aws_mq_broker.main.primary_endpoints
+output "broker_endpoint" {
+  description = "The primary endpoint of the broker"
+  value       = aws_mq_broker.main.instances[0].endpoints[0]
 }
